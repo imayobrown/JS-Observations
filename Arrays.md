@@ -1,9 +1,9 @@
 #Array
 ---
 
-Arrays are really just a type of object that is optimized to bind values to successive numeric integer keys. It has built in property functions that perform operations/actions on its elements. These operations do not perform in place modification of the array (the elements in the array are never changed) but rather they return a new array or object with the desired changes affected to its elements.
+Arrays are really just a type of object that is optimized to bind values to successive numeric integer keys. Calling **typeof** on an array reveals it to be just an *object*. It has built in property functions that perform operations/actions on its elements. These operations do not perform in place modification of the array (the elements in the array are never changed) but rather they return a new array or object with the desired changes affected to its elements.
 
-## Array Functions
+## Array Methods
 
 ####push
 
