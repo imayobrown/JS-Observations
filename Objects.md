@@ -1,7 +1,7 @@
 #Objects
 ---
 
-###Static Objects/Object Literals
+##Static Objects/Object Literals
 Static objects (object literals) can be created in javascript. These objects are much like dictionaries or hash maps in other languages. Technically every javascript object is a hash map/dictionary. Each key in the dictionary is an "attribute" which can be either just a data member or a function. In javascript object functions are just attributes that are mapped to functions instead of static data objects. Here is an example of the code used to create a static object (one that has not constructor or prototype):
 
     var object = {property1: "This property is a string",
@@ -19,7 +19,7 @@ This object will only ever exist as the variable object within the namespace tha
 	console.log(newProperty); //Will output "New property" to the console.
 
 
-###Object Creation using Constructor
+##Object Creation using Constructor
 
 Objects can be created in more classical fashion using constructor functions. This manner will allow the object definition to have a prototype attribute that can be used to dynamically add and modify the class. When created in this manner the entire definition and structure of the class are contained in the constructor function definition. Here is an example of how a object definition can be constructed:
 
@@ -35,6 +35,17 @@ Here we define a Person object with two properties/attributes, name and age, and
 
 ####Prototypes
 
-As previously stated, since this object was defined using a constructor it now has a prototype property. This property is assigned at runtime by the interpreter once it recognizes that this object was defined with a constructor rather than as an object literal. **The prototype property is essentially a pointer to the constructor function. By accessing it we can dynamically modify the object definition.** Modifications to an object using the prototype property will propagate to any objects created from Person (using new Person()) or any objects that have inherited from Person. Only objects created using a constructor will be assigned this property, object literals do not have this and therefore the object instance must be modified directly. This is the power of the prototype property, it allows changes to an object definition to be made in one place and have those changes reflected in numerous other objects simultaneously. Where as if objects are always created using object literals then each object has to be modified manually even if they share a common structure. Here is an example of accessing and utilizing the prototype property: 
+As previously stated, since this object was defined using a constructor it now has a prototype property. This property is assigned at runtime by the interpreter once it recognizes that this object was defined with a constructor rather than as an object literal. **The prototype property is essentially a pointer to the constructor function. By accessing it we can dynamically modify the object definition.** Modifications to an object using the prototype property will propagate to any objects created from Person (using new Person()) or any objects that have inherited from Person. Only objects created using a constructor will be assigned this property, object literals do not have this and therefore the object instance must be modified directly. This is the power of the prototype property, it allows changes to an object definition to be made in one place and have those changes reflected in numerous other objects simultaneously. Where as if objects are always created using object literals then each object has to be modified manually even if they share a common structure. Here is an example of accessing and utilizing the prototype property of the Person class defined above: 
 	
+	//Create a Person object named John
+	var John = new Person('John','25');
+
+	console.log(John.getName()); //Error: getName undefined for John. 
 	
+	Person.prototype.getName = function() {
+		return this.name;
+	};
+
+	console.log(John.getName()); //Prints "John" to console
+
+Here we can see that even though we didnt make any changes to John he was updated with the change we made to Person using its prototype property. This illustrates the propagation of the changes to Person to all of the object instances created from its definition.
