@@ -49,3 +49,44 @@ As previously stated, since this object was defined using a constructor it now h
 	console.log(John.getName()); //Prints "John" to console
 
 Here we can see that even though we didnt make any changes to John he was updated with the change we made to Person using its prototype property. This illustrates the propagation of the changes to Person to all of the object instances created from its definition.
+
+The distinction between the way an object has a prototype (retrieved by *Object.getPrototypeOf* ) and the way a prototype is associated with a constructor is described very clearly in "Eloquent JavaScript" by Martin Haverbeke in Chapter 6, section header "Prototypes":
+
+>It is important to note the distinction between the way a prototype is associated with a constructor (through its prototype property) and the way objects have a prototype (which can be retrieved with Object.getPrototypeOf). The actual prototype of a constructor is Function.prototype since constructors are functions. Its prototype property will be the prototype of instances created through it but is not its own prototype.
+
+From his explanation we see that prototypes are passed by association with constructors and the *prototype* property of an object may not match its actual prototype because the *prototype* property is the value tied to the objects constructor. For example continuing using the example from above:
+
+	//Override the Object.toString method for the Person class in order to print an 
+	//informative value when queried. Otherwise it will simply print the default value for an
+	//object which is '{}'
+	Person.prototype.toString = function() { return 'Person'; }
+
+	console.log(Object.getPrototypeOf(Person.prototype).toString());
+	// function Empty()  {}
+
+	console.log(Person.prototype);
+	// {}
+
+	console.log(Object.getPrototypeOf(John).toString());
+	// Person
+
+	console.log(John.prototype);
+	// undefined
+	
+Here we can see that John, since it is an object created from a constructor has no **property** *prototype* but he does actually have a prototype which is 'Person'. With the Person we can see that it is a constructor therefore it has a *prototype* **property** which is different from its actual prototype. Its actual prototype is function Empty().
+
+
+##Object Methods
+
+####Object.defineProperty
+
+	Object.defineProperty( obj, propertyKey, options )
+
+Used to define a property on an object with a list of options to determine the characteristics of the property. Very useful when defining properties on prototypes to keep them from being enumerable or controlling other aspects of their behavior. Example adding property *key* with value *static* to a prototype:
+
+	Object.defineProperty( Person.prototype, 'key', {
+		enumerable: false,
+		configurable: false,
+		writable: false,
+		value: 'static'
+	});

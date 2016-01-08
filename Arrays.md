@@ -17,6 +17,12 @@ Adds an element **item** to the end of the array. Does not return any value.
 
 Removes an element from the end of the array and returns it.
 
+####join
+
+	array.join( delimiter )
+
+Joins an array into a string using the value of delimiter (given as a string) as the elements placed between each of the elements as they are placed in the string.
+
 ####forEach
 
 	array.forEach( action )
